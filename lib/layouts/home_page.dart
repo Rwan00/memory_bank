@@ -7,6 +7,7 @@ import 'package:memory_bank/views/memories_screen.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../widgets/input_field.dart';
+import '../widgets/upload_img.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,13 +59,14 @@ class _HomePageState extends State<HomePage> {
             Navigator.pop(context);
             isBottomSheetShown = false;
           } else {
-            scaffoldKey.currentState!.showBottomSheet((context) => Container(
+            scaffoldKey.currentState!.showBottomSheet((context) => const SizedBox(
                   width: double.infinity,
-                  height: 550,
-                  child: const Column(
+                  height: 500,
+                  child: Column(
                     children: [
                       InputField(title: 'Title', hint: 'The title of your memory',),
                       InputField(title: 'Description', hint: 'Describe your memory',),
+                      UploadImg(),
                     ],
                   ),
                 ));
