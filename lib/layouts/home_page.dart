@@ -6,6 +6,8 @@ import 'package:memory_bank/views/favourites_screen.dart';
 import 'package:memory_bank/views/memories_screen.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../widgets/input_field.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -26,17 +28,21 @@ class _HomePageState extends State<HomePage> {
       'title': "Archived Memories",
     },
   ];
+
+  late Database database;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isBottomSheetShown = false;
+
   @override
   void initState() {
     super.initState();
     createDatabase();
   }
 
-  late Database database;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text(
           _pages[_selectedIndex]["title"],
@@ -44,16 +50,29 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(249, 249, 224, 1),
-        //shadowColor: const Color.fromRGBO(255, 192, 217, 1),
-        elevation: 6,
       ),
       body: _pages[_selectedIndex]["page"],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          insertToDatabase();
+          if (isBottomSheetShown) {
+            Navigator.pop(context);
+            isBottomSheetShown = false;
+          } else {
+            scaffoldKey.currentState!.showBottomSheet((context) => Container(
+                  width: double.infinity,
+                  height: 550,
+                  child: const Column(
+                    children: [
+                      InputField(title: 'Title', hint: 'The title of your memory',),
+                      InputField(title: 'Description', hint: 'Describe your memory',),
+                    ],
+                  ),
+                ));
+            isBottomSheetShown = true;
+          }
         },
-        child: const Icon(
-          Icons.add,
+        child:  const Icon(
+          Icons.image,
           color: Colors.grey,
         ),
       ),
@@ -124,8 +143,8 @@ class _HomePageState extends State<HomePage> {
       print("database Opened!");
     });
   }
-
-   void insertToDatabase() {
+/* 
+  void insertToDatabase() {
     database.transaction((txn) {
       txn
           .rawInsert(
@@ -137,5 +156,5 @@ class _HomePageState extends State<HomePage> {
       });
       return null;
     });
-  }
+  } */
 }
