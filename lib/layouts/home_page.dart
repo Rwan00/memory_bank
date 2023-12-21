@@ -11,6 +11,7 @@ import 'package:memory_bank/views/memories_screen.dart';
 import 'package:sqflite/sqflite.dart';
 
 
+import '../widgets/bottom_sheet_body.dart';
 import '../widgets/input_field.dart';
 import '../widgets/upload_img.dart';
 
@@ -37,10 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   late Database database;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
-  String time = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  
  
 
   @override
@@ -66,71 +64,8 @@ class _HomePageState extends State<HomePage> {
       body: _pages[_selectedIndex]["page"],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-            scaffoldKey.currentState!.showBottomSheet((context) => SingleChildScrollView(
-              child: Container(
-                color: const Color.fromRGBO(138, 205, 215,0.1),
-                    width: double.infinity,
-                    height: height * 0.65,
-                    child: Column(
-                      children: [
-                        InputField(
-                          title: 'Title',
-                          hint: 'The title of your memory',
-                          controller: titleController,
-                        ),
-                        InputField(
-                          title: 'Description',
-                          hint: 'Describe your memory',
-                          controller: descController,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: InputField(
-                                title: "Date",
-                                hint: DateFormat.yMd().format(selectedDate),
-                                widget: IconButton(
-                                  onPressed: () => _getDateFromUser(),
-                                  icon: const Icon(
-                                    Icons.calendar_today_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Expanded(
-                              child: InputField(
-                                title: "Time",
-                                hint: time,
-                                widget: IconButton(
-                                  onPressed: () => _getTimeFromUser(),
-                                  icon: const Icon(
-                                    Icons.access_time_rounded,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        pickedImage == null? GestureDetector(
-                          onTap: fetchImage,
-                          child: const UploadImg()
-                          ) : Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child:  Image.file(pickedImage!,fit: BoxFit.cover,height: 190,width: double.infinity),
-                            ),
-                          )
-                          ,
-                      ],
-                    ),
-                  ),
-            ));
+            scaffoldKey.currentState!.showBottomSheet((context) => const BottomSheetBody()
+            );
         },
         child: const Icon(
           Icons.image,
@@ -219,54 +154,7 @@ class _HomePageState extends State<HomePage> {
     });
   } */
 
-  _getDateFromUser() async {
-    DateTime? pickedDate = await showDatePicker(
-      initialEntryMode: DatePickerEntryMode.calendar,
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2015),
-      lastDate: DateTime(2030),
-    );
-    if (pickedDate != null) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
-    } else {
-      print("IT'S NULL OR SOMETHING IS WRONG!!");
-    }
-  }
-
-  _getTimeFromUser() async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(DateTime.now()),
-    );
-
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-
-      setState(() {
-        time = formattedTime;
-      });
-    } else {
-      print("It's Null");
-    }
-  }
-
-  final ImagePicker picker = ImagePicker();
-  File? pickedImage;
-  ImageProvider<Object>? imageProvider;
-
-  fetchImage() async {
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) {
-      return;
-    }
-    setState(() {
-      pickedImage = File(image.path);
-      imageProvider = FileImage(pickedImage!);
-    });
-  }
+ 
 
   
 }
