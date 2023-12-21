@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor:const Color.fromRGBO(226, 243, 241, 1.0),
       key: scaffoldKey,
       appBar: AppBar(
         title: Text(
