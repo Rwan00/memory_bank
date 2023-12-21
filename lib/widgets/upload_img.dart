@@ -9,7 +9,7 @@ class UploadImg extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal:16,vertical: 32),
+      margin: const EdgeInsets.all(16),
         height: height*0.2,
         width: double.infinity,
         decoration: BoxDecoration(

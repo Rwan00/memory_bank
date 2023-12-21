@@ -10,7 +10,7 @@ import 'package:memory_bank/views/favourites_screen.dart';
 import 'package:memory_bank/views/memories_screen.dart';
 import 'package:sqflite/sqflite.dart';
 
-
+import '../database/db_helper.dart';
 import '../widgets/bottom_sheet_body.dart';
 import '../widgets/input_field.dart';
 import '../widgets/upload_img.dart';
@@ -36,10 +36,8 @@ class _HomePageState extends State<HomePage> {
     },
   ];
 
-  late Database database;
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  
- 
 
   @override
   void initState() {
@@ -64,8 +62,8 @@ class _HomePageState extends State<HomePage> {
       body: _pages[_selectedIndex]["page"],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-            scaffoldKey.currentState!.showBottomSheet((context) => const BottomSheetBody()
-            );
+          scaffoldKey.currentState!
+              .showBottomSheet((context) => const BottomSheetBody());
         },
         child: const Icon(
           Icons.image,
@@ -123,38 +121,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void createDatabase() async {
-    database = await openDatabase("memories.db", version: 1,
-        onCreate: (database, version) {
-      print("database created!");
-      database
-          .execute(
-              "CREATE TABLE memory (id INTEGER PRIMARY KEY,title TEXT,descreption TEXT,img TEXT,date TEXT,time TEXT,status TEXT)")
-          .then((value) {
-        print("tablr created!");
-      }).catchError((error) {
-        print("Error whem creating table ${error.toString()}");
-      });
-    }, onOpen: (database) {
-      print("database Opened!");
-    });
-  }
-/* 
-  void insertToDatabase() {
-    database.transaction((txn) {
-      txn
-          .rawInsert(
-              "INSERT INTO memory(title,descreption,img,date,time,status)  VALUES('first','desc','kjk','123','22','fav')")
-          .then((value) {
-        print("$value inserted successfully!");
-      }).catchError((error) {
-        print("Error when inserting new record $error");
-      });
-      return null;
-    });
-  } */
 
- 
-
-  
 }
