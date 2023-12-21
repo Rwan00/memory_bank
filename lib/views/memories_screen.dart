@@ -7,11 +7,18 @@ class MemoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return GridView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 210,
+        childAspectRatio: 0.6,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 1,
+      ),
         physics: const BouncingScrollPhysics(),
       itemCount: memories.length,
         itemBuilder: (ctx,index){
       return  MemoryItem(model: memories[index],);
-    });
+    }, );
   }
 }

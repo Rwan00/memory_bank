@@ -192,7 +192,14 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
         img: pickedImage!.path,
         date: DateFormat.yMMMd().format(selectedDate),
         time: time,
-      );
+      ).then((value) {
+        getDataFromDatabase(database).then((value) {
+          setState(() {
+            memories = value;
+          });
+          print(memories);
+        });
+      });
       print(pickedImage!.path);
       Navigator.pop(context);
     } else if (titleController.text.isEmpty || descController.text.isEmpty || pickedImage == null) {

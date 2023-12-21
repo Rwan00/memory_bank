@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:memory_bank/widgets/separator.dart';
 
 import '../database/db_helper.dart';
 
@@ -24,9 +25,8 @@ class MemoryItem extends StatelessWidget {
           Stack(
             children: <Widget>[
               ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
+                borderRadius:  BorderRadius.circular(
+                  15
                 ),
                 child: Image.file(
                   img,
@@ -40,7 +40,7 @@ class MemoryItem extends StatelessWidget {
                 right: 5,
                 child: Container(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 50),
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 24),
                   decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [
@@ -52,7 +52,7 @@ class MemoryItem extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(15)),
-                  width: 250,
+                  width: 150,
                   child: Text(
                     model["title"],
                     style: GoogleFonts.aDLaMDisplay(
@@ -66,34 +66,49 @@ class MemoryItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: Column(
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    const Icon(Icons.calendar_month,color: Colors.grey,),
+                    const Icon(Icons.calendar_month,color: Colors.grey,size: 12,),
                     const SizedBox(
                       width: 6,
                     ),
                     Text(
                       model["date"],
                       style: GoogleFonts.aDLaMDisplay(
-                          color: Colors.grey, fontSize: 16),
+                          color: Colors.grey, fontSize: 14),
                     ),
                   ],
                 ),
+                const SizedBox(height: 8,),
                 Row(
                   children: <Widget>[
-                    const Icon(Icons.access_time_outlined,color: Colors.grey,),
+                    const Icon(Icons.access_time_outlined,color: Colors.grey,size: 14,),
                     const SizedBox(
                       width: 6,
                     ),
                     Text(
                       model["time"],
                       style: GoogleFonts.aDLaMDisplay(
-                          color: Colors.grey, fontSize: 16),
+                          color: Colors.grey, fontSize: 12),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                const Separator(),
+                const SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  model["description"],
+                  style: GoogleFonts.aDLaMDisplay(
+                      color: Colors.grey, fontSize: 16),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
