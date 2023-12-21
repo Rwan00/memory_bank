@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -185,12 +186,19 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
         (descController.text.isNotEmpty)&&
         (pickedImage != null)
     ) {
-      await insertToDatabase();
+      await insertToDatabase(
+        title: titleController.text,
+        desc: descController.text,
+        img: pickedImage!.path,
+        date: DateFormat.yMMMd().format(selectedDate),
+        time: time,
+      );
+      print(pickedImage!.path);
       Navigator.pop(context);
-    }
-    else if (titleController.text.isEmpty || descController.text.isEmpty || pickedImage == null) {
+    } else if (titleController.text.isEmpty || descController.text.isEmpty || pickedImage == null) {
       showToast(
-        "required,All Fields Are Required",
+        "Required,All Fields Are Required",
+        textStyle: GoogleFonts.aDLaMDisplay(color: Colors.grey),
         context: context,
         animation: StyledToastAnimation.rotate,
         reverseAnimation: StyledToastAnimation.fade,
@@ -200,7 +208,7 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
         duration: const Duration(seconds: 4),
         curve: Curves.elasticOut,
         reverseCurve: Curves.linear,
-        backgroundColor: Colors.purple[200],
+        backgroundColor: const Color.fromRGBO(249, 249, 224, 0.6),
       );
     } else {
       print("############SOMETHING BAD HAPPENED##########");
