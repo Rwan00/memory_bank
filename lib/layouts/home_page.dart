@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -59,7 +60,11 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(249, 249, 224, 1),
       ),
-      body: _pages[_selectedIndex]["page"],
+      body: ConditionalBuilder(
+        condition: memories.isNotEmpty,
+        builder: (context)=> _pages[_selectedIndex]["page"],
+        fallback: (context) => const Center(child: CircularProgressIndicator(),),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           scaffoldKey.currentState!

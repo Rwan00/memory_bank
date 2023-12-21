@@ -6,11 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../database/db_helper.dart';
 
 class MemoryItem extends StatelessWidget {
-  const MemoryItem({super.key});
+  final Map model;
+  const MemoryItem({ required this.model,super.key});
 
   @override
   Widget build(BuildContext context) {
-    File pickedImage = File(memories[0]["img"]);
+    File img = File(model["img"]);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -28,7 +29,7 @@ class MemoryItem extends StatelessWidget {
                   topRight: Radius.circular(15),
                 ),
                 child: Image.file(
-                  pickedImage,
+                  img,
                   height: 200,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -53,7 +54,7 @@ class MemoryItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15)),
                   width: 250,
                   child: Text(
-                    memories[0]["title"],
+                    model["title"],
                     style: GoogleFonts.aDLaMDisplay(
                         color: Colors.white, fontSize: 16),
                     softWrap: true,
@@ -75,7 +76,7 @@ class MemoryItem extends StatelessWidget {
                       width: 6,
                     ),
                     Text(
-                      memories[0]["date"],
+                      model["date"],
                       style: GoogleFonts.aDLaMDisplay(
                           color: Colors.grey, fontSize: 16),
                     ),
@@ -88,7 +89,7 @@ class MemoryItem extends StatelessWidget {
                       width: 6,
                     ),
                     Text(
-                      memories[0]["time"],
+                      model["time"],
                       style: GoogleFonts.aDLaMDisplay(
                           color: Colors.grey, fontSize: 16),
                     ),

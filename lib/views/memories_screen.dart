@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memory_bank/database/db_helper.dart';
 import 'package:memory_bank/widgets/memory_item.dart';
 
 class MemoriesScreen extends StatelessWidget {
@@ -8,9 +9,9 @@ class MemoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         physics: const BouncingScrollPhysics(),
-      itemCount: 8,
+      itemCount: memories.length,
         itemBuilder: (ctx,index){
-      return const MemoryItem();
+      return  MemoryItem(model: memories[index],);
     });
   }
 }

@@ -19,6 +19,7 @@ void createDatabase() async {
         print("database Opened!");
         getDataFromDatabase(database).then((value) {
           memories = value;
+          print(memories);
         });
       });
 }
