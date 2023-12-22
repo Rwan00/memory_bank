@@ -28,7 +28,7 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
     double width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Container(
-        color: const Color.fromRGBO(138, 205, 215, 0.1),
+        color: const Color.fromRGBO(250, 240, 230,0.4),
         width: double.infinity,
         height: height * 0.69,
         child: Column(

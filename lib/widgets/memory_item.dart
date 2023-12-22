@@ -20,12 +20,12 @@ class MemoryItem extends StatelessWidget {
         navigateTo(context,MemoryDetailsScreen(model: model,));
       },
       child: Card(
-        //color: Color.fromRGBO(219, 245, 241, 1.0),
+        color:const Color.fromRGBO(185, 180, 199,0.7),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
         elevation: 10,
-        shadowColor: const Color.fromRGBO(138, 205, 215, 0.7),
+        shadowColor: const Color.fromRGBO(53, 47, 68,1),
         margin: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
@@ -51,9 +51,10 @@ class MemoryItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [
-                            Color.fromRGBO(255, 192, 217, 0.7),
-                            Color.fromRGBO(138, 205, 215, 0.7),
-                            Color.fromRGBO(249, 249, 224, 0.7),
+                            Color.fromRGBO(53, 47, 68,1),
+                            Color.fromRGBO(92, 84, 112,1),
+                            Color.fromRGBO(185, 180, 199,1),
+                            Color.fromRGBO(250, 240, 230,1),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -77,28 +78,28 @@ class MemoryItem extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      const Icon(Icons.calendar_month,color: Colors.grey,size: 12,),
+                      const Icon(Icons.calendar_month,color: Colors.white,size: 12,),
                       const SizedBox(
                         width: 6,
                       ),
                       Text(
                         model["date"],
                         style: GoogleFonts.aDLaMDisplay(
-                            color: Colors.grey, fontSize: 14),
+                            color: Colors.white, fontSize: 14),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8,),
                   Row(
                     children: <Widget>[
-                      const Icon(Icons.access_time_outlined,color: Colors.grey,size: 14,),
+                      const Icon(Icons.access_time_outlined,color: Colors.white,size: 14,),
                       const SizedBox(
                         width: 6,
                       ),
                       Text(
                         model["time"],
                         style: GoogleFonts.aDLaMDisplay(
-                            color: Colors.grey, fontSize: 12),
+                            color: Colors.white, fontSize: 12),
                       ),
                     ],
                   ),
@@ -112,7 +113,7 @@ class MemoryItem extends StatelessWidget {
                   Text(
                     model["description"],
                     style: GoogleFonts.aDLaMDisplay(
-                        color: Colors.grey, fontSize: 16),
+                        color: Colors.white, fontSize: 16),
                     textAlign: TextAlign.center,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,

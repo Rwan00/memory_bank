@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromRGBO(255, 192, 217, 1),
-          primary: const Color.fromRGBO(138, 205, 215,1),
-        secondary: const Color.fromRGBO(138, 205, 215,1)),
-        useMaterial3: true,
+          seedColor: const Color.fromRGBO(53, 47, 68,1),
+          primary: const Color.fromRGBO(53, 47, 68,1),
+        secondary: const Color.fromRGBO(250, 240, 230,1),),
+        useMaterial3: false,
       ),
       home: const HomePage(),
     );

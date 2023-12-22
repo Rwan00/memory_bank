@@ -51,15 +51,15 @@ class _HomePageState extends State<HomePage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor:const Color.fromRGBO(226, 243, 241, 1.0),
+      backgroundColor:const Color.fromRGBO(250, 240, 230,1),
       key: scaffoldKey,
       appBar: AppBar(
         title: Text(
           _pages[_selectedIndex]["title"],
-          style: GoogleFonts.aDLaMDisplay(color: Colors.grey),
+          style: GoogleFonts.aDLaMDisplay(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromRGBO(249, 249, 224, 1),
+        backgroundColor: const Color.fromRGBO(53, 47, 68,1),
       ),
       body: ConditionalBuilder(
         condition: memories.isNotEmpty,
@@ -67,20 +67,21 @@ class _HomePageState extends State<HomePage> {
         fallback: (context) => const Center(child: CircularProgressIndicator(),),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(53, 47, 68,1),
         onPressed: () {
           scaffoldKey.currentState!
               .showBottomSheet((context) => const BottomSheetBody());
         },
         child: const Icon(
           Icons.image,
-          color: Colors.grey,
+          color: Colors.white,
         ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Color.fromRGBO(249, 249, 224, 1),
+          //color: Color.fromRGBO(53, 47, 68,0.8),
           boxShadow: <BoxShadow>[
-            BoxShadow(color: Color.fromRGBO(255, 192, 217, 1), blurRadius: 9)
+            BoxShadow(color: const Color.fromRGBO(53, 47, 68,1), blurRadius: 9)
           ],
         ),
         child: SafeArea(
@@ -94,30 +95,36 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               gap: 10,
-              activeColor: Colors.grey,
+              activeColor: Colors.white,
               tabActiveBorder:
-                  Border.all(color: const Color.fromRGBO(255, 192, 217, 1)),
+                  Border.all(color: const Color.fromRGBO(250, 240, 230,1)),
               duration: const Duration(milliseconds: 600),
               tabBorderRadius: 15,
-              tabBackgroundColor: const Color.fromRGBO(190, 231, 237, 1),
+              //tabBackgroundColor: const Color.fromRGBO(92, 84, 112,0.6),
               iconSize: 16,
               curve: Curves.easeInCubic,
-              color: Colors.grey,
+              color: Colors.white,
               tabs: <GButton>[
                 GButton(
                   icon: Icons.home,
+                  iconColor: Colors.white,
+                  iconSize: 24,
                   text: "Home",
-                  textStyle: GoogleFonts.aDLaMDisplay(color: Colors.grey),
+                  textStyle: GoogleFonts.aDLaMDisplay(color: Colors.white),
                 ),
                 GButton(
                   icon: Icons.favorite_border,
+                  iconColor: Colors.white,
+                  iconSize: 24,
                   text: "Favorite",
-                  textStyle: GoogleFonts.aDLaMDisplay(color: Colors.grey),
+                  textStyle: GoogleFonts.aDLaMDisplay(color: Colors.white),
                 ),
                 GButton(
                   icon: Icons.archive,
+                  iconColor: Colors.white,
+                  iconSize: 24,
                   text: "Archived",
-                  textStyle: GoogleFonts.aDLaMDisplay(color: Colors.grey),
+                  textStyle: GoogleFonts.aDLaMDisplay(color: Colors.white),
                 ),
               ],
             ),
