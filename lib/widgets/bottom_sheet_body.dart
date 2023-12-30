@@ -10,6 +10,9 @@ import 'package:memory_bank/cubit/app_cubit/app_cubit.dart';
 import 'package:memory_bank/cubit/app_cubit/app_state.dart';
 
 import '../database/db_helper.dart';
+import '../layouts/home_page.dart';
+import '../methods/navigator.dart';
+import '../methods/show_toast_method.dart';
 import 'input_field.dart';
 import 'upload_img.dart';
 
@@ -29,83 +32,120 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return  BlocProvider(
-      create: (context)=> AppCubit()..createDatabase(),
-      child: BlocConsumer<AppCubit,AppStates>(
-        listener: (context,state){},
-        builder: (context,state){
-          AppCubit cubit = AppCubit.get(context);
-          return  SingleChildScrollView(
-            child: Container(
-              color: const Color.fromRGBO(250, 240, 230, 0.4),
-              width: double.infinity,
-              height: height * 0.69,
-              child: Column(
-                children: [
-                  InputField(
-                    title: 'Title',
-                    hint: 'The title of your memory',
-                    controller: titleController,
-                  ),
-                  InputField(
-                    title: 'Description',
-                    hint: 'Describe your memory',
-                    controller: descController,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: InputField(
-                          title: "Date",
-                          hint: DateFormat.yMd().format(selectedDate),
-                          widget: IconButton(
-                            onPressed: () => _getDateFromUser(),
-                            icon: const Icon(
-                              Icons.calendar_today_outlined,
-                              color: Colors.grey,
-                            ),
+    return  BlocConsumer<AppCubit,AppStates>(
+      listener: (context,state){
+        if(state is AppInsertDatabaseState){
+          Navigator.pop(context);
+        }
+      },
+      builder: (context,state){
+        AppCubit cubit = AppCubit.get(context);
+        return  SingleChildScrollView(
+          child: Container(
+            color: const Color.fromRGBO(250, 240, 230, 0.4),
+            width: double.infinity,
+            height: height * 0.69,
+            child: Column(
+              children: [
+                InputField(
+                  title: 'Title',
+                  hint: 'The title of your memory',
+                  controller: titleController,
+                ),
+                InputField(
+                  title: 'Description',
+                  hint: 'Describe your memory',
+                  controller: descController,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: InputField(
+                        title: "Date",
+                        hint: DateFormat.yMd().format(selectedDate),
+                        widget: IconButton(
+                          onPressed: () => _getDateFromUser(),
+                          icon: const Icon(
+                            Icons.calendar_today_outlined,
+                            color: Colors.grey,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: width * 0.03,
-                      ),
-                      Expanded(
-                        child: InputField(
-                          title: "Time",
-                          hint: time,
-                          widget: IconButton(
-                            onPressed: () => _getTimeFromUser(),
-                            icon: const Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: fetchImage,
-                    child: pickedImage == null
-                        ? const UploadImg()
-                        : Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Image.file(pickedImage!,
-                            fit: BoxFit.cover,
-                            height: 190,
-                            width: double.infinity),
                       ),
                     ),
+                    SizedBox(
+                      width: width * 0.03,
+                    ),
+                    Expanded(
+                      child: InputField(
+                        title: "Time",
+                        hint: time,
+                        widget: IconButton(
+                          onPressed: () => _getTimeFromUser(),
+                          icon: const Icon(
+                            Icons.access_time_rounded,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: fetchImage,
+                  child: pickedImage == null
+                      ? const UploadImg()
+                      : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.file(pickedImage!,
+                          fit: BoxFit.cover,
+                          height: 190,
+                          width: double.infinity),
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        backgroundColor:
+                        MaterialStateProperty.all(Colors.red[300]),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(horizontal: 8)),
+                      ),
+                      child: const Icon(Icons.delete_outline),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          if ((titleController.text.isNotEmpty) &&
+                              (descController.text.isNotEmpty) &&
+                              (pickedImage != null)){
+                            cubit.insertToDatabase(
+                              title: titleController.text,
+                              desc: descController.text,
+                              img: pickedImage!.path,
+                              date: DateFormat.yMMMd().format(selectedDate),
+                              time: time,);
+
+                          }else if (titleController.text.isEmpty ||
+                              descController.text.isEmpty ||
+                              pickedImage == null) {
+                            buildShowToast(context);
+                          } else {
+                            print("############SOMETHING BAD HAPPENED##########");
+                          }
                         },
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all(
@@ -113,76 +153,25 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                           ),
-                          backgroundColor:
-                          MaterialStateProperty.all(Colors.red[300]),
                           padding: MaterialStateProperty.all(
                               const EdgeInsets.symmetric(horizontal: 8)),
                         ),
-                        child: const Icon(Icons.delete_outline),
+                        child: const Icon(Icons.done_outline_sharp),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if ((titleController.text.isNotEmpty) &&
-                                (descController.text.isNotEmpty) &&
-                                (pickedImage != null)){
-                              cubit.insertToDatabase(
-                                title: titleController.text,
-                                desc: descController.text,
-                                img: pickedImage!.path,
-                                date: DateFormat.yMMMd().format(selectedDate),
-                                time: time,);
-                              Navigator.pop(context);
-                            }else if (titleController.text.isEmpty ||
-                                descController.text.isEmpty ||
-                                pickedImage == null) {
-                              buildShowToast(context);
-                            } else {
-                              print("############SOMETHING BAD HAPPENED##########");
-                            }
-                          },
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.symmetric(horizontal: 8)),
-                          ),
-                          child: const Icon(Icons.done_outline_sharp),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        );
+      },
 
-      ),
     );
 
   }
 
-  ToastFuture buildShowToast(BuildContext context) {
-    return showToast(
-                              "Required,All Fields Are Required",
-                              textStyle: GoogleFonts.aDLaMDisplay(color: Colors.grey),
-                              context: context,
-                              animation: StyledToastAnimation.rotate,
-                              reverseAnimation: StyledToastAnimation.fade,
-                              position: const StyledToastPosition(
-                                  align: Alignment.bottomCenter, offset: 50),
-                              animDuration: const Duration(seconds: 2),
-                              duration: const Duration(seconds: 4),
-                              curve: Curves.elasticOut,
-                              reverseCurve: Curves.linear,
-                              backgroundColor: const Color.fromRGBO(249, 249, 224, 0.6),
-                            );
-  }
+
 
   _getDateFromUser() async {
     DateTime? pickedDate = await showDatePicker(
@@ -231,48 +220,5 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
       pickedImage = File(image.path);
       imageProvider = FileImage(pickedImage!);
     });
-  }
-
-  _validation() async {
-    if ((titleController.text.isNotEmpty) &&
-        (descController.text.isNotEmpty) &&
-        (pickedImage != null)) {
-
-      /*await insertToDatabase(
-        title: titleController.text,
-        desc: descController.text,
-        img: pickedImage!.path,
-        date: DateFormat.yMMMd().format(selectedDate),
-        time: time,
-      ).then((value) {
-        getDataFromDatabase(database).then((value) {
-          setState(() {
-            memories = value;
-          });
-          print(memories);
-        });
-      });
-      print(pickedImage!.path);*/
-      Navigator.pop(context);
-    } else if (titleController.text.isEmpty ||
-        descController.text.isEmpty ||
-        pickedImage == null) {
-      showToast(
-        "Required,All Fields Are Required",
-        textStyle: GoogleFonts.aDLaMDisplay(color: Colors.grey),
-        context: context,
-        animation: StyledToastAnimation.rotate,
-        reverseAnimation: StyledToastAnimation.fade,
-        position: const StyledToastPosition(
-            align: Alignment.bottomCenter, offset: 50),
-        animDuration: const Duration(seconds: 2),
-        duration: const Duration(seconds: 4),
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linear,
-        backgroundColor: const Color.fromRGBO(249, 249, 224, 0.6),
-      );
-    } else {
-      print("############SOMETHING BAD HAPPENED##########");
-    }
   }
 }

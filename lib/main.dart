@@ -15,19 +15,16 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => AppCubit()..createDatabase(),
-      child: MaterialApp(
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromRGBO(53, 47, 68, 1),
-            primary: const Color.fromRGBO(53, 47, 68, 1),
-            secondary: const Color.fromRGBO(250, 240, 230, 1),
-          ),
-          useMaterial3: true,
+    return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromRGBO(53, 47, 68, 1),
+          primary: const Color.fromRGBO(53, 47, 68, 1),
+          secondary: const Color.fromRGBO(250, 240, 230, 1),
         ),
-        home:  HomePage(),
+        useMaterial3: true,
       ),
+      home:  HomePage(),
     );
   }
 }
