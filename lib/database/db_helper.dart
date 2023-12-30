@@ -1,3 +1,4 @@
+/*
 import 'package:sqflite/sqflite.dart';
 
 late Database database;
@@ -45,5 +46,5 @@ Future<void> insertToDatabase({
 }
 
 Future<List<Map>> getDataFromDatabase(db) async{
-   return await db.rawQuery("SELECT * FROM memory");
-}
+  return await db.rawQuery("SELECT * FROM memory");
+}*/

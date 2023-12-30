@@ -43,19 +43,23 @@ class MemoryDetailsScreen extends StatelessWidget {
                           Color.fromRGBO(53, 47, 68,1),
                           Color.fromRGBO(92, 84, 112,1),
                           Color.fromRGBO(185, 180, 199,1),
-                          Color.fromRGBO(250, 240, 230,1),
+
+                          Color.fromRGBO(92, 84, 112,1),
+                          Color.fromRGBO(53, 47, 68,1),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(15)),
                   width: 250,
-                  child: Text(
-                    model["title"],
-                    style: GoogleFonts.aDLaMDisplay(
-                        color: Colors.white, fontSize: 24),
-                    softWrap: true,
-                    overflow: TextOverflow.fade,
+                  child: Center(
+                    child: Text(
+                      model["title"],
+                      style: GoogleFonts.aDLaMDisplay(
+                          color: Colors.white, fontSize: 24),
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),
                   ),
                 ),
                 Container(
