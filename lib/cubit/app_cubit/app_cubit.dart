@@ -39,6 +39,8 @@ class AppCubit extends Cubit<AppStates> {
 
  late Database database;
   List<Map> memories = [];
+  List<Map> favMemories = [];
+  List<Map> archivedMemories = [];
 
   void createDatabase() {
     openDatabase("memories.db", version: 1, onCreate: (database, version) {
@@ -53,11 +55,7 @@ class AppCubit extends Cubit<AppStates> {
       });
     }, onOpen: (database) {
       print("database Opened!");
-      getDataFromDatabase(database).then((value) {
-        memories = value;
-        print(memories);
-        emit(AppGetDatabaseState());
-      });
+      getDataFromDatabase(database);
     }).then((value) {
       database = value;
       emit(AppCreateDatabaseState());
@@ -75,26 +73,65 @@ class AppCubit extends Cubit<AppStates> {
       await database.transaction((txn) async {
         int insertedId = await txn.rawInsert(
             "INSERT INTO memory(title, description, img, date, time, status) VALUES(?, ?, ?, ?, ?, ?)",
-            [title, desc, img, date, time, 'fav']);
+            [title, desc, img, date, time, 'none']);
 
         print("$insertedId inserted successfully!");
         emit(AppInsertDatabaseState());
-        getDataFromDatabase(database).then((value) {
-          memories = value;
-          print(memories);
-          emit(AppGetDatabaseState());
-        });
+        getDataFromDatabase(database);
       });
     } catch (error) {
       print("Error when inserting new record: $error");
     }
   }
 
-  Future<List<Map>> getDataFromDatabase(db) async {
-    return await db.rawQuery("SELECT * FROM memory");
+   getDataFromDatabase(db)  {
+
+      memories = [];
+      favMemories = [];
+      archivedMemories = [];
+
+    emit(AppGetDatabaseLoadingState());
+     db.rawQuery("SELECT * FROM memory").then((value) {
+
+      print(memories);
+      value.forEach((element){
+        if(element["status"] == "none"){
+          memories.add(element);
+        }else if(element["status"] == "fav"){
+          favMemories.add(element);
+        }else{
+          archivedMemories.add(element);
+        }
+      });
+      emit(AppGetDatabaseState());
+    });
   }
 
+void updateData({
+    required String status,
+    required int id,
+})async{
+   database.rawUpdate(
+      "UPDATE memory SET status = ? WHERE id = ?",
+      [status,id],
+    ).then((value) {
+      getDataFromDatabase(database);
+      emit(AppUpdateDatabaseState());
+   });
+}
 
+bool isLike = false;
+
+  changeLikeState(){
+    isLike = !isLike;
+    emit(AppChangeLikeState());
+  }
+  bool isArchived = false;
+
+  changeArchivedState(){
+    isArchived = !isArchived;
+    emit(AppChangeArchivedState());
+  }
 
   
 }
