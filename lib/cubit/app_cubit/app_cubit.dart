@@ -120,6 +120,18 @@ void updateData({
    });
 }
 
+void deleteData({
+    required int id,
+})async{
+   database.rawDelete(
+      "DELETE FROM memory WHERE id = ?",
+      [id],
+    ).then((value) {
+      getDataFromDatabase(database);
+      emit(AppDeleteDatabaseState());
+   });
+}
+
 bool isLike = false;
 
   changeLikeState(){
