@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memory_bank/cubit/app_cubit/app_cubit.dart';
 import 'package:memory_bank/cubit/app_cubit/app_state.dart';
-import 'package:memory_bank/database/db_helper.dart';
 import 'package:memory_bank/widgets/memory_item.dart';
 
 class MemoriesScreen extends StatelessWidget {

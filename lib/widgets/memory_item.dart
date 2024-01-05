@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memory_bank/cubit/app_cubit/app_cubit.dart';
 import 'package:memory_bank/widgets/separator.dart';
-
-import '../database/db_helper.dart';
 import '../methods/navigator.dart';
 import '../views/memory_detailes_screen.dart';
 

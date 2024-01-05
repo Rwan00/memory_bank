@@ -1,17 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:memory_bank/cubit/app_cubit/app_cubit.dart';
 import 'package:memory_bank/cubit/app_cubit/app_state.dart';
-
-import '../database/db_helper.dart';
-import '../layouts/home_page.dart';
-import '../methods/navigator.dart';
 import '../methods/show_toast_method.dart';
 import 'input_field.dart';
 import 'upload_img.dart';

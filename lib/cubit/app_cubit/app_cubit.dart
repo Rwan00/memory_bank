@@ -1,10 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:memory_bank/cubit/app_cubit/app_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import '../../views/archived_screen.dart';
 import '../../views/favourites_screen.dart';
 import '../../views/memories_screen.dart';
-import '../../widgets/bottom_sheet_body.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());

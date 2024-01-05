@@ -1,34 +1,18 @@
-import 'dart:io';
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:memory_bank/cubit/app_cubit/app_cubit.dart';
 import 'package:memory_bank/cubit/app_cubit/app_state.dart';
-
-import 'package:memory_bank/views/archived_screen.dart';
-import 'package:memory_bank/views/favourites_screen.dart';
-import 'package:memory_bank/views/memories_screen.dart';
-import 'package:sqflite/sqflite.dart';
-
-import '../database/db_helper.dart';
-import '../methods/navigator.dart';
 import '../widgets/bottom_sheet_body.dart';
-import '../widgets/input_field.dart';
-import '../widgets/upload_img.dart';
+
 
 class HomePage extends StatelessWidget {
    HomePage({super.key});
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return BlocConsumer<AppCubit, AppStates>(
       listener: (BuildContext context, AppStates state) {},
       builder: (BuildContext context, AppStates state) {
@@ -55,8 +39,7 @@ class HomePage extends StatelessWidget {
             backgroundColor: const Color.fromRGBO(53, 47, 68, 1),
             onPressed: () {
               scaffoldKey.currentState!
-                  .showBottomSheet((context) => BottomSheetBody());
-              //navigateTo(context, AddNew());
+                  .showBottomSheet((context) => const BottomSheetBody());
             },
             child: const Icon(
               Icons.image,
@@ -65,7 +48,6 @@ class HomePage extends StatelessWidget {
           ),
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
-              //color: Color.fromRGBO(53, 47, 68,0.8),
               boxShadow: <BoxShadow>[
                 BoxShadow(color: Color.fromRGBO(53, 47, 68, 1), blurRadius: 9)
               ],

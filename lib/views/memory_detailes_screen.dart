@@ -13,7 +13,6 @@ class MemoryDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     File img = File(model["img"]);
     return BlocConsumer<AppCubit, AppStates>(
@@ -36,7 +35,6 @@ class MemoryDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
-                  //crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: height * 0.03,
